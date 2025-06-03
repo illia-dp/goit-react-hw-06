@@ -1,0 +1,14 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.input {
+  width: 400px;
+  border: 1px solid black;
+  outline: transparent;
+  border-radius: 8px;
+  height: 40px;
+  padding: 6px 12px;
+}
