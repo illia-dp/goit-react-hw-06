@@ -1,11 +1,17 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { nanoid } from "nanoid";
 import { object, string } from "yup";
+import Cleave from "cleave.js/react";
 import s from "./ContactForm.module.css";
 
 const contactFormSchema = object({
   name: string().required().min(3).max(50),
-  number: string().required().min(7).max(7),
+  number: string()
+    .required("Phone number is required")
+    .matches(
+      /^\d{3}-\d{2}-\d{2}$/,
+      "Phone number must be in the format 123-45-67"
+    ),
 });
 
 const ContactForm = ({ addContact }) => {
@@ -31,7 +37,19 @@ const ContactForm = ({ addContact }) => {
         </label>
         <label className={s.label}>
           <span>Number</span>
-          <Field className={s.input} name="number" type="tel" />
+          <Field name="number">
+            {({ field }) => (
+              <Cleave
+                {...field}
+                className={s.input}
+                options={{
+                  blocks: [3, 2, 2],
+                  numericOnly: true,
+                  delimiter: "-",
+                }}
+              />
+            )}
+          </Field>
           <ErrorMessage
             className={s.errorMessage}
             component="div"
