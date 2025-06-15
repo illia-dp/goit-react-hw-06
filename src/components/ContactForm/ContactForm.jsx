@@ -1,6 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { nanoid } from "nanoid";
 import { object, string } from "yup";
+import { useDispatch } from "react-redux";
+import { addContactAction } from "../../redux/contactsSlice";
 import Cleave from "cleave.js/react";
 import s from "./ContactForm.module.css";
 
@@ -14,13 +16,14 @@ const contactFormSchema = object({
     ),
 });
 
-const ContactForm = ({ addContact }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
   return (
     <Formik
       initialValues={{ name: "", number: "" }}
       onSubmit={(values, actions) => {
         const formData = { id: nanoid(), ...values };
-        addContact(formData);
+        dispatch(addContactAction(formData));
         actions.resetForm();
       }}
       validationSchema={contactFormSchema}

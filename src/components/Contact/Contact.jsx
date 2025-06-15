@@ -1,7 +1,10 @@
 import { IoPersonSharp, IoCall } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { delteContactAction } from "../../redux/contactsSlice";
 import s from "./Contact.module.css";
 
-const Contact = ({ id, name, number, deleteContact }) => {
+const Contact = ({ id, name, number }) => {
+  const dispatch = useDispatch();
   return (
     <div className={s.card}>
       <div>
@@ -14,7 +17,10 @@ const Contact = ({ id, name, number, deleteContact }) => {
           {number}
         </p>
       </div>
-      <button className={s.button} onClick={() => deleteContact(id)}>
+      <button
+        className={s.button}
+        onClick={() => dispatch(delteContactAction(id))}
+      >
         Delete
       </button>
     </div>
